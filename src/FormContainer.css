@@ -39,3 +39,7 @@
     height: 2em;
     font-size: 1em;
 }
+
+.error {
+    background-color: red;
+}
