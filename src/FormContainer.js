@@ -50,6 +50,7 @@ export class FormContainer extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.validateInput = this.validateInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.validateElementByName = this.validateElementByName.bind(this);
     }
 
     handleChange(event) {
@@ -67,6 +68,10 @@ export class FormContainer extends Component {
         const target = event.target;
         const name = target.name;
         const value = target.value;
+        this.validateElementByName(name, value);
+    }
+
+    validateElementByName(name, value) {
         let partialState = {};
         if(name === 'fullName') {
             partialState[name+'Error'] = !(value && value.length > 2);
@@ -84,9 +89,13 @@ export class FormContainer extends Component {
     }
 
     handleSubmit() {
+        const elements = document.querySelectorAll("div > input, div > select");
+        elements.forEach(el => {
+            this.validateElementByName(el.name, el.value);
+        })
         if(this.state.fullNameError || this.state.emailError || this.state.passwordError ||
             this.state.occupationError || this.state.stateError) {
-                this.setState({entryNotValid : true});
+                
         } else {
             console.log('looks good')
         }
@@ -159,8 +168,8 @@ export class FormContainer extends Component {
                             </select>
                             <ErrorText message="You must select your state" show={this.state.stateError}/>
                         </div>
-                        <div>
-                            <button onClick={this.handleSubmit}>Submit</button>
+                        <div class="button">
+                            <button onClick={this.handleSubmit}>Sign Up</button>
                         </div>
                     </div>
                 </div>
