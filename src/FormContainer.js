@@ -206,7 +206,7 @@ export class FormContainer extends Component {
                         </div> }
                         {this.state.congrats && 
                         <div class="form-control">
-                            <h4>Your account has successfully been created. Feel free to navigate away form this page.</h4>
+                            <h4>Your account has successfully been created. Feel free to navigate away from this page.</h4>
                         </div>
                         }
                     </div>
