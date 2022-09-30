@@ -41,7 +41,7 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 20%;
+    padding: 10em 0 10em;
 }
 
 .form-control {
