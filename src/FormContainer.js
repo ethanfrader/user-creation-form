@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './FormContainer.css';
+import './icon.png';
 
 function ListStates(props) {
     const states = props.states;
@@ -95,7 +96,14 @@ export class FormContainer extends Component {
         return(
             <div class="half-screen">
                 <div class="card" onMouseMove={this.checkValidity}>
-                    <h1>This is the card with too many words to fit</h1>
+                    <div class="title-shader">
+                        <div class="title">
+                            <div class="logo">
+                                <img class="logo" src={require("./icon.png")}></img>
+                            </div>
+                            <h1>Please fill out this form to create your account:</h1>
+                        </div>
+                    </div>
                     <div class="form-control">
                         <div>
                             <label for="fullName">Full Name</label>
