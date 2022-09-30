@@ -48,6 +48,7 @@ export class FormContainer extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.validateInput = this.validateInput.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
@@ -79,6 +80,15 @@ export class FormContainer extends Component {
             partialState[name+'Error'] = !(value && value !== '');
         }
         this.setState(partialState);
+    }
+
+    handleSubmit() {
+        if(this.state.fullNameError || this.state.emailError || this.state.passwordError ||
+            this.state.occupationError || this.state.stateError) {
+                this.setState({entryNotValid : true});
+        } else {
+            console.log('looks good')
+        }
     }
 
     render() {
@@ -142,7 +152,7 @@ export class FormContainer extends Component {
                             <ErrorText message="You must select your state" show={this.state.stateError}/>
                         </div>
                         <div>
-                            <button disabled={this.state.entryNotValid}>Submit</button>
+                            <button onClick={this.handleSubmit}>Submit</button>
                         </div>
                     </div>
                 </div>
@@ -155,14 +165,12 @@ export class FormContainer extends Component {
         fetch('https://frontend-take-home.fetchrewards.com/form')
             .then(res => res.json())
             .then(result => {
-                console.log(result);
                 this.setState({
                     occupations : result.occupations
                 })
                 this.setState({
                     states: result.states
                 })
-                console.log(this.state)
             })
             .catch(err => {
                 console.log(err);
