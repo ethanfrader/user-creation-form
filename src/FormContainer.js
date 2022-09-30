@@ -17,6 +17,16 @@ function ListOccupations(props) {
     return listOccs;
 }
 
+function ErrorText(props) {
+    const text = props.message;
+    const show = props.show;
+    return (
+        <span>
+            {show && <p class="error-text">{text}</p>}
+        </span>
+    )
+}
+
 export class FormContainer extends Component {
     constructor(props) {
         super(props);
@@ -56,7 +66,6 @@ export class FormContainer extends Component {
         const name = target.name;
         const value = target.value;
         let partialState = {};
-        console.log('validating: ' + name)
         if(name === 'fullName') {
             partialState[name+'Error'] = !(value && value.length > 2);
         } else if(name === 'email') {
@@ -86,6 +95,7 @@ export class FormContainer extends Component {
                                     class={`${this.state.fullNameError ? 'error' : ''}`} 
                                     onChange={this.handleChange}
                                     onBlur={this.validateInput}></input>
+                            <ErrorText message="Full name is required" show={this.state.fullNameError}/>
                         </div>
                         <div>
                             <label for="email">Email</label>
@@ -95,6 +105,7 @@ export class FormContainer extends Component {
                                     class={`${this.state.emailError ? 'error' : ''}`}  
                                     onChange={this.handleChange}
                                     onBlur={this.validateInput}></input>
+                            <ErrorText message="Email is required" show={this.state.emailError}/>
                         </div>
                         <div>
                             <label for="password">Password</label>
@@ -104,6 +115,7 @@ export class FormContainer extends Component {
                                     class={`${this.state.passwordError ? 'error' : ''}`} 
                                     onChange={this.handleChange}
                                     onBlur={this.validateInput}></input>
+                            <ErrorText message="Password must be at least 8 characters" show={this.state.passwordError}/>
                         </div>
                         <div>
                             <label for="occupation">Occupation</label>
@@ -115,6 +127,7 @@ export class FormContainer extends Component {
                                 <option value="">Select your occupation</option>
                                 <ListOccupations occupations={this.state.occupations} />
                             </select>
+                            <ErrorText message="You must select an occupation" show={this.state.occupationError}/>
                         </div>
                         <div>
                             <label for="state">State</label>
@@ -126,6 +139,7 @@ export class FormContainer extends Component {
                                 <option value="">Select your state</option>
                                 <ListStates states={this.state.states} />
                             </select>
+                            <ErrorText message="You must select your state" show={this.state.stateError}/>
                         </div>
                         <div>
                             <button disabled={this.state.entryNotValid}>Submit</button>
