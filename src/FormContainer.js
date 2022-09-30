@@ -39,7 +39,6 @@ export class FormContainer extends Component {
             password: '',
             occupation: '',
             state: '',
-            entryNotValid: true,
             fullNameError: false,
             emailError: false,
             passwordError: false,
@@ -74,11 +73,15 @@ export class FormContainer extends Component {
     validateElementByName(name, value) {
         let partialState = {};
         if(name === 'fullName') {
-            partialState[name+'Error'] = !(value && value.length > 2);
+            // names aren't very standardized, allow any value 2 characters or longer
+            const pattern = /^[a-z ,.'-]+$/i;
+            partialState[name+'Error'] = !(value && value.length >= 2 && pattern.test(value));
         } else if(name === 'email') {
-            // use regex
-            partialState[name+'Error'] = !(value && value.length > 3);
+            // use regex for validation
+            const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            partialState[name+'Error'] = !(value && pattern.test(value));
         } else if(name === 'password') {
+            // require a minimum length for security
             partialState[name+'Error'] = !(value && value.length > 8);
         } else if(name === 'occupation') {
             partialState[name+'Error'] = !(value && value !== '');
@@ -136,7 +139,7 @@ export class FormContainer extends Component {
                         </div>
                         <div>
                             <label for="password">Password</label>
-                            <input type="text" 
+                            <input type="password" 
                                     id="password" 
                                     name="password" 
                                     class={`${this.state.passwordError ? 'error' : ''}`} 
